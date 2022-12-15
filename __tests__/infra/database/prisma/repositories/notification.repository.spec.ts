@@ -1,50 +1,79 @@
 import {
+  NotificationMapper,
   PrismaNotificationsRepository,
   PrismaService
 } from '@/infra/database/prisma'
-import { ICreateNotificationRepository } from '@/services/protocols'
 import { mockNotification } from '@/tests/domain/mocks'
 import { Test } from '@nestjs/testing'
-interface Sut {
-  sut: PrismaNotificationsRepository
-  db: PrismaService
-}
 
-const makeSut = async (): Promise<Sut> => {
+const makeSut = async (): Promise<PrismaNotificationsRepository> => {
   const moduleRef = await Test.createTestingModule({
     providers: [PrismaNotificationsRepository, PrismaService]
   }).compile()
 
-  return {
-    sut: moduleRef.get(PrismaNotificationsRepository),
-    db: moduleRef.get(PrismaService)
-  }
+  return await moduleRef.get(PrismaNotificationsRepository)
 }
 
-const mockRequest = (): ICreateNotificationRepository.Params =>
-  mockNotification()
-
 describe('PrismaNotificationRepository', () => {
+  const db = new PrismaService()
+
   describe('create()', () => {
     it('should create a notification register', async () => {
-      const { sut, db } = await makeSut()
-      const request = mockRequest()
+      const sut = await makeSut()
+      const data = mockNotification()
 
-      await sut.create(request)
-      const notification = await db.notification.findUnique({
+      await sut.create(data)
+      const result = await db.notification.findUnique({
         where: {
-          id: request.id
+          id: data.id
         }
       })
 
-      expect(notification).toStrictEqual({
-        id: request.id,
-        recipientId: request.recipientId,
-        category: request.category,
-        content: request.content,
-        readAt: request.readAt,
-        createdAt: request.createdAt
+      const expected = new NotificationMapper(data).toPrisma()
+      expect(result).toStrictEqual(expected)
+    })
+  })
+
+  describe('findById()', () => {
+    it('should find notification', async () => {
+      const sut = await makeSut()
+      const data = mockNotification()
+
+      await sut.create(data)
+      const result = await sut.findById(data.id)
+
+      expect(result).toStrictEqual(data)
+    })
+
+    it('should return null if no notification was found', async () => {
+      const sut = await makeSut()
+
+      const result = await sut.findById('')
+
+      expect(result).toBeNull()
+    })
+  })
+
+  describe('update()', () => {
+    it('should update a notification', async () => {
+      const sut = await makeSut()
+      const data = new NotificationMapper(mockNotification()).toPrisma()
+      const newData = mockNotification()
+
+      data.id = newData.id
+      await db.notification.create({
+        data
       })
+      await sut.update(newData)
+
+      const result = await db.notification.findUnique({
+        where: {
+          id: data.id
+        }
+      })
+
+      const expected = new NotificationMapper(newData).toPrisma()
+      expect(result).toStrictEqual(expected)
     })
   })
 })
