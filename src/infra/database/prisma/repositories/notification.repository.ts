@@ -1,7 +1,7 @@
 import { Notification } from '@/domain/entities'
+import { NotificationMapper } from '@/domain/mappers/notification-mapper'
 import { ICreateNotificationRepository } from '@/services/protocols'
 import { Injectable } from '@nestjs/common'
-import { NotificationMapper } from '@/domain/mappers/notification-mapper'
 import { PrismaService } from '../prisma.service'
 
 interface INotificationRepository extends ICreateNotificationRepository {}

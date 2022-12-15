@@ -11,6 +11,7 @@ export class NotificationMapper {
       category: this.props.category,
       content: this.props.content,
       readAt: this.props.readAt,
+      canceledAt: this.props.canceledAt,
       createdAt: this.props.createdAt
     }
   }
