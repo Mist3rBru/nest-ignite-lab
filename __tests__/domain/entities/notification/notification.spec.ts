@@ -69,4 +69,13 @@ describe('Notification', () => {
 
     expect(sut.readAt).toStrictEqual(expect.any(Date))
   })
+
+  it('should mark notification as unread', () => {
+    const props = mockProps()
+
+    const sut = makeSut(props)
+    sut.unread()
+
+    expect(sut.readAt).toBeNull()
+  })
 })

@@ -1,5 +1,5 @@
 import { NotFoundError, Notification } from '@/domain/entities'
-import { CancelNotification } from '@/services/usecases'
+import { UnreadNotification } from '@/services/usecases'
 import { throwError } from '@/tests/domain/mocks'
 import {
   FindNotificationByIdRepositorySpy,
@@ -8,7 +8,7 @@ import {
 import { faker } from '@faker-js/faker'
 
 interface Sut {
-  sut: CancelNotification
+  sut: UnreadNotification
   findNotificationByIdRepositorySpy: FindNotificationByIdRepositorySpy
   updateNotificationRepositorySpy: UpdateNotificationRepositorySpy
 }
@@ -17,7 +17,7 @@ const makeSut = (): Sut => {
   const findNotificationByIdRepositorySpy =
     new FindNotificationByIdRepositorySpy()
   const updateNotificationRepositorySpy = new UpdateNotificationRepositorySpy()
-  const sut = new CancelNotification(
+  const sut = new UnreadNotification(
     findNotificationByIdRepositorySpy,
     updateNotificationRepositorySpy
   )
@@ -28,12 +28,12 @@ const makeSut = (): Sut => {
   }
 }
 
-describe('CancelNotification', () => {
+describe('UnreadNotification', () => {
   it('should call FindNotificationByIdNotificationRepository with notification id', async () => {
     const { sut, findNotificationByIdRepositorySpy } = makeSut()
 
     const notificationId = faker.datatype.uuid()
-    await sut.cancel(notificationId)
+    await sut.unread(notificationId)
 
     expect(findNotificationByIdRepositorySpy.calledTimes).toBe(1)
     expect(findNotificationByIdRepositorySpy.notificationId).toBe(
@@ -45,19 +45,19 @@ describe('CancelNotification', () => {
     const { sut, findNotificationByIdRepositorySpy } = makeSut()
 
     findNotificationByIdRepositorySpy.notification = null
-    const promise = sut.cancel('')
+    const promise = sut.unread('')
 
     await expect(promise).rejects.toThrow(new NotFoundError('notification'))
   })
 
-  it('should set notification as canceled', async () => {
+  it('should set notification as unread', async () => {
     const { sut, findNotificationByIdRepositorySpy } = makeSut()
 
-    await sut.cancel('')
+    await sut.unread('')
 
     const notification =
       findNotificationByIdRepositorySpy.notification as Notification
-    expect(notification.canceledAt).toStrictEqual(expect.any(Date))
+    expect(notification.readAt).toBeNull()
   })
 
   it('should call UpdateNotificationRepository with canceled notification', async () => {
@@ -67,7 +67,7 @@ describe('CancelNotification', () => {
       findNotificationByIdRepositorySpy
     } = makeSut()
 
-    await sut.cancel('')
+    await sut.unread('')
 
     expect(updateNotificationRepositorySpy.calledTimes).toBe(1)
     expect(updateNotificationRepositorySpy.notification).toStrictEqual(
@@ -80,17 +80,17 @@ describe('CancelNotification', () => {
       findNotificationByIdRepositorySpy,
       updateNotificationRepositorySpy
     } = makeSut()
-    const suts: CancelNotification[] = [
-      new CancelNotification(
+    const suts: UnreadNotification[] = [
+      new UnreadNotification(
         { findById: () => throwError() },
         updateNotificationRepositorySpy
       ),
-      new CancelNotification(findNotificationByIdRepositorySpy, {
+      new UnreadNotification(findNotificationByIdRepositorySpy, {
         update: () => throwError()
       })
     ]
     for (const sut of suts) {
-      const promise = sut.cancel('')
+      const promise = sut.unread('')
       await expect(promise).rejects.toThrow()
     }
   })
