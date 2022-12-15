@@ -1,12 +1,12 @@
-import { Content, Notification } from '@/domain/entities'
+import { Notification } from '@/domain/entities'
 import { ISendNotification } from '@/domain/usecases'
-import { INotificationRepository } from '@/services/protocols'
+import { ICreateNotificationRepository } from '@/services/protocols'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class SendNotification implements ISendNotification {
   constructor(
-    private readonly createNotificationRepository: INotificationRepository
+    private readonly createNotificationRepository: ICreateNotificationRepository
   ) {}
 
   async send(
@@ -16,12 +16,14 @@ export class SendNotification implements ISendNotification {
 
     const notification = new Notification({
       recipientId,
-      content: new Content(content),
+      content,
       category
     })
 
     await this.createNotificationRepository.create(notification)
 
-    return notification
+    return {
+      notification
+    }
   }
 }

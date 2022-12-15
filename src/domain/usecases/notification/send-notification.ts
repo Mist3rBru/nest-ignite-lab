@@ -1,7 +1,9 @@
 import { Notification } from '@/domain/entities'
 
 export abstract class ISendNotification {
-  abstract send(data: ISendNotification.Params): Promise<ISendNotification.Result>
+  abstract send(
+    data: ISendNotification.Params
+  ): Promise<ISendNotification.Result>
 }
 
 export namespace ISendNotification {
@@ -11,5 +13,7 @@ export namespace ISendNotification {
     category: string
   }
 
-  export type Result = Notification
+  export interface Result {
+    notification: Notification
+  }
 }

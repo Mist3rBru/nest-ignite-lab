@@ -2,17 +2,17 @@ import {
   PrismaNotificationsRepository,
   PrismaService
 } from '@/infra/database/prisma'
-import { INotificationRepository } from '@/services/protocols'
+import { ICreateNotificationRepository } from '@/services/protocols'
 import { Module } from '@nestjs/common'
 
 @Module({
   providers: [
     PrismaService,
     {
-      provide: INotificationRepository,
+      provide: ICreateNotificationRepository,
       useClass: PrismaNotificationsRepository
     }
   ],
-  exports: [INotificationRepository]
+  exports: [ICreateNotificationRepository]
 })
 export class DatabaseModule {}
