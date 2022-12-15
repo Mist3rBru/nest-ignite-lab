@@ -1,14 +1,7 @@
 import { Param } from '../helpers/param'
 
-export interface LengthErrorProps {
-  param: string
-  length: number
-  min: number
-  max?: number
-}
-
 export class LengthError extends Error {
-  constructor(props: LengthErrorProps) {
+  constructor(props: LengthError.Props) {
     const isHigher = props.max ? props.length > props.max : false
     const adjective = isHigher ? 'lower' : 'higher'
     const desired = isHigher ? props.max : props.min
@@ -16,5 +9,14 @@ export class LengthError extends Error {
     const msg = `${capitalizedValue} must be ${adjective} than ${desired}`
     super(msg)
     this.name = 'LengthError'
+  }
+}
+
+export namespace LengthError {
+  export interface Props {
+    param: string
+    length: number
+    min: number
+    max?: number
   }
 }

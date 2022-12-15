@@ -1,10 +1,10 @@
-import { LengthError, LengthErrorProps } from '@/domain/entities'
+import { LengthError } from '@/domain/entities'
 
-const makeSut = (props: LengthErrorProps): LengthError => {
+const makeSut = (props: LengthError.Props): LengthError => {
   return new LengthError(props)
 }
 
-const mockProps = (length: number): LengthErrorProps => ({
+const mockProps = (length: number): LengthError.Props => ({
   param: 'param',
   length,
   min: 1,

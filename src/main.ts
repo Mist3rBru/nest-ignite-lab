@@ -1,7 +1,7 @@
-import { AppModule } from '@/main/modules/app.module'
+import { PrismaService } from '@/infra/database/prisma'
+import { AppModule } from '@/main/modules'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { PrismaService } from './infra/database/prisma'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -17,7 +17,7 @@ async function bootstrap() {
 
 bootstrap()
   .then(() => {
-    process.stdout.write('Server is running on http://localhost:3000\n')
+    process.stdout.write('🚀 Server is running on http://localhost:3000\n')
   })
   .catch(err => {
     console.error(err)

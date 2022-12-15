@@ -1,13 +1,12 @@
-import { Notification, NotificationProps, Replace } from '@/domain/entities'
+import { Notification } from '@/domain/entities'
 import { faker } from '@faker-js/faker'
 
-const makeSut = (
-  props: Replace<NotificationProps, { createdAt?: Date }>
-): Notification => {
+const makeSut = (props: Notification.Params): Notification => {
   return new Notification(props)
 }
 
-const mockProps = (): Replace<NotificationProps, { createdAt?: Date }> => ({
+const mockProps = (): Notification.Params => ({
+  id: faker.datatype.uuid(),
   category: faker.lorem.word(),
   content: faker.lorem.sentence(),
   recipientId: faker.datatype.uuid(),
@@ -25,9 +24,18 @@ describe('Notification', () => {
 
   it('should define id', () => {
     const props = mockProps()
+    props.id = undefined
     const sut = makeSut(props)
 
     expect(sut.id).toStrictEqual(expect.any(String))
+  })
+
+  it('should define readAt', () => {
+    const props = mockProps()
+    props.readAt = undefined
+    const sut = makeSut(props)
+
+    expect(sut.readAt).toBeNull()
   })
 
   it('should define created at', () => {
@@ -42,6 +50,7 @@ describe('Notification', () => {
     const props = mockProps()
     const sut = makeSut(props)
 
+    expect(sut.id).toStrictEqual(props.id)
     expect(sut.category).toStrictEqual(props.category)
     expect(sut.content).toStrictEqual(props.content)
     expect(sut.recipientId).toStrictEqual(props.recipientId)
@@ -54,14 +63,14 @@ describe('Notification', () => {
     const sut = makeSut(props)
 
     const newProps = mockProps()
-    sut.recipientId = newProps.recipientId
-    sut.content = newProps.content
     sut.category = newProps.category
-    sut.readAt = newProps.readAt
+    sut.content = newProps.content
+    sut.recipientId = newProps.recipientId
+    sut.readAt = newProps.readAt as Date
 
-    expect(sut.recipientId).toStrictEqual(newProps.recipientId)
-    expect(sut.content).toStrictEqual(newProps.content)
     expect(sut.category).toStrictEqual(newProps.category)
+    expect(sut.content).toStrictEqual(newProps.content)
+    expect(sut.recipientId).toStrictEqual(newProps.recipientId)
     expect(sut.readAt).toStrictEqual(newProps.readAt)
   })
 })

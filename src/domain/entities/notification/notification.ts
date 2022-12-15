@@ -1,29 +1,22 @@
 import { randomUUID } from 'node:crypto'
-import { Replace } from '../helpers/replace'
 import { NotificationContent } from './notification-content'
 
-export interface NotificationProps {
-  recipientId: string
-  content: string
-  category: string
-  readAt?: Date | null
-  createdAt: Date
-}
-
 export class Notification {
-  private readonly _id: string
-  private readonly props: NotificationProps
+  private readonly props: Notification.Props
 
-  constructor(props: Replace<NotificationProps, { createdAt?: Date }>) {
-    this._id = randomUUID()
+  constructor(props: Notification.Params) {
     this.props = {
-      ...props,
+      id: props.id ?? randomUUID(),
+      category: props.category,
+      content: new NotificationContent(props.content),
+      recipientId: props.recipientId,
+      readAt: props.readAt ?? null,
       createdAt: props.createdAt ?? new Date()
     }
   }
 
   public get id() {
-    return this._id
+    return this.props.id
   }
 
   public set recipientId(recipientId: string) {
@@ -35,11 +28,11 @@ export class Notification {
   }
 
   public set content(content: string) {
-    this.props.content = new NotificationContent(content).value
+    this.props.content = new NotificationContent(content)
   }
 
   public get content(): string {
-    return this.props.content
+    return this.props.content.value
   }
 
   public set category(category: string) {
@@ -50,15 +43,35 @@ export class Notification {
     return this.props.category
   }
 
-  public set readAt(readAt: Date | null | undefined) {
+  public set readAt(readAt: Date | null) {
     this.props.readAt = readAt
   }
 
-  public get readAt(): Date | null | undefined {
+  public get readAt(): Date | null {
     return this.props.readAt
   }
 
   public get createdAt(): Date {
     return this.props.createdAt
+  }
+}
+
+export namespace Notification {
+  export interface Props {
+    id: string
+    recipientId: string
+    content: NotificationContent
+    category: string
+    readAt: Date | null
+    createdAt: Date
+  }
+
+  export interface Params {
+    id?: string
+    recipientId: string
+    content: string
+    category: string
+    readAt?: Date | null
+    createdAt?: Date
   }
 }
