@@ -1,12 +1,42 @@
-import { ICreateNotificationRepository } from '@/services/protocols'
+import { Notification } from '@/domain/entities'
+import {
+  ICreateNotificationRepository,
+  IFindNotificationByIdRepository,
+  IUpdateNotificationRepository
+} from '@/services/protocols'
+import { mockNotification } from '@/tests/domain/mocks'
 
-export class CreateNotificationRepository
+export class CreateNotificationRepositorySpy
   implements ICreateNotificationRepository {
   calledTimes: number = 0
-  params: ICreateNotificationRepository.Params
+  notification: Notification
 
-  async create(params: ICreateNotificationRepository.Params): Promise<void> {
+  async create(notification: Notification): Promise<void> {
     this.calledTimes++
-    this.params = params
+    this.notification = notification
+  }
+}
+
+export class UpdateNotificationRepositorySpy
+  implements IUpdateNotificationRepository {
+  calledTimes: number = 0
+  notification: Notification
+
+  async update(notification: Notification): Promise<void> {
+    this.calledTimes++
+    this.notification = notification
+  }
+}
+
+export class FindNotificationByIdRepositorySpy
+  implements IFindNotificationByIdRepository {
+  calledTimes: number = 0
+  notificationId: string
+  notification: Notification = mockNotification()
+
+  async findById(notificationId: string): Promise<Notification> {
+    this.calledTimes++
+    this.notificationId = notificationId
+    return this.notification
   }
 }
