@@ -1,3 +1,4 @@
+import { NotFoundError } from '@/domain/entities'
 import { CancelNotification } from '@/services/usecases'
 import { throwError } from '@/tests/domain/mocks'
 import {
@@ -38,6 +39,15 @@ describe('CancelNotification', () => {
     expect(findNotificationByIdRepositorySpy.notificationId).toBe(
       notificationId
     )
+  })
+
+  it('should throw NotFoundError if no notification was found', async () => {
+    const { sut, findNotificationByIdRepositorySpy } = makeSut()
+
+    findNotificationByIdRepositorySpy.notification = null
+    const promise = sut.cancel('')
+
+    await expect(promise).rejects.toThrow(new NotFoundError('notification'))
   })
 
   it('should call cancel notification', async () => {

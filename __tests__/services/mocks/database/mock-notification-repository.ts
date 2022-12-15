@@ -32,9 +32,9 @@ export class FindNotificationByIdRepositorySpy
   implements IFindNotificationByIdRepository {
   calledTimes: number = 0
   notificationId: string
-  notification: Notification = mockNotification()
+  notification: Notification | null = mockNotification()
 
-  async findById(notificationId: string): Promise<Notification> {
+  async findById(notificationId: string): Promise<Notification | null> {
     this.calledTimes++
     this.notificationId = notificationId
     return this.notification

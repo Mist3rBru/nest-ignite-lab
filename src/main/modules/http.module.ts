@@ -1,16 +1,20 @@
-import { ISendNotification } from '@/domain/usecases'
+import { ICancelNotification, ISendNotification } from '@/domain/usecases'
 import { DatabaseModule } from '@/main/modules/database.module'
-import { SendNotificationController } from '@/presentation/controllers'
-import { SendNotification } from '@/services/usecases'
+import { CancelNotificationController, SendNotificationController } from '@/presentation/controllers'
+import { CancelNotification, SendNotification } from '@/services/usecases'
 import { Module } from '@nestjs/common'
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [SendNotificationController],
+  controllers: [SendNotificationController, CancelNotificationController],
   providers: [
     {
       provide: ISendNotification,
       useClass: SendNotification
+    },
+    {
+      provide: ICancelNotification,
+      useClass: CancelNotification
     }
   ]
 })

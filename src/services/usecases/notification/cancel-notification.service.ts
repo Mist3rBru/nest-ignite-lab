@@ -1,3 +1,4 @@
+import { NotFoundError } from '@/domain/entities'
 import { ICancelNotification } from '@/domain/usecases'
 import {
   IFindNotificationByIdRepository,
@@ -16,6 +17,10 @@ export class CancelNotification implements ICancelNotification {
     const notification = await this.findNotificationByIdRepository.findById(
       notificationId
     )
+
+    if (!notification) {
+      throw new NotFoundError('notification')
+    }
 
     notification.cancel()
 
