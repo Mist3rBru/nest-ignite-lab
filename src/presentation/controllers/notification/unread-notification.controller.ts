@@ -1,5 +1,5 @@
 import { IUnreadNotification } from '@/domain/usecases'
-import { IController } from '@/presentation/protocols/controller'
+import { IController } from '@/presentation/protocols'
 import { Controller, Param, Patch } from '@nestjs/common'
 
 @Controller()

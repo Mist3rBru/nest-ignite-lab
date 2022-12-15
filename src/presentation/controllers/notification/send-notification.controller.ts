@@ -1,7 +1,7 @@
 import { NotificationMapper } from '@/domain/mappers/notification-mapper'
 import { ISendNotification } from '@/domain/usecases'
 import { SendNotificationBody } from '@/presentation/dtos'
-import { IController } from '@/presentation/protocols/controller'
+import { IController } from '@/presentation/protocols'
 import { Body, Controller, Post } from '@nestjs/common'
 
 @Controller()

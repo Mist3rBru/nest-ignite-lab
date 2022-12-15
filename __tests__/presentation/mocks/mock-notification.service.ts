@@ -1,5 +1,12 @@
-import { ICancelNotification, IReadNotification, ISendNotification, IUnreadNotification } from '@/domain/usecases'
+import {
+  ICancelNotification,
+  ICountRecipientNotifications,
+  IReadNotification,
+  ISendNotification,
+  IUnreadNotification
+} from '@/domain/usecases'
 import { mockNotification } from '@/tests/domain/mocks'
+import { faker } from '@faker-js/faker'
 
 export class SendNotificationSpy implements ISendNotification {
   calledTimes: number = 0
@@ -44,5 +51,22 @@ export class UnreadNotificationSpy implements IUnreadNotification {
   async unread(notificationId: string): Promise<void> {
     this.calledTimes++
     this.notificationId = notificationId
+  }
+}
+
+export class CountRecipientNotificationsSpy
+  implements ICountRecipientNotifications {
+  calledTimes: number = 0
+  recipientId: string
+  result: ICountRecipientNotifications.Result = {
+    count: faker.datatype.number()
+  }
+
+  async count(
+    recipientId: string
+  ): Promise<ICountRecipientNotifications.Result> {
+    this.calledTimes++
+    this.recipientId = recipientId
+    return this.result
   }
 }
