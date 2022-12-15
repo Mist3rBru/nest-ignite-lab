@@ -6,14 +6,14 @@ const makeSut = (value: string): Param => {
 }
 
 describe('Param', () => {
-  it('should return param value', async () => {
+  it('should return param value', () => {
     const value = faker.random.word()
     const sut = makeSut(value)
 
     expect(sut.value).toBe(value)
   })
 
-  it('should return capitalized param value', async () => {
+  it('should return capitalized param value', () => {
     const sut = makeSut('param')
 
     expect(sut.capitalizedValue).toBe('Param')

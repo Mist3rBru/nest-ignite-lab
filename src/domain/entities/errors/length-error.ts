@@ -9,7 +9,7 @@ export interface LengthErrorProps {
 
 export class LengthError extends Error {
   constructor(props: LengthErrorProps) {
-    const isHigher = props?.max ? props.length > props.max : false
+    const isHigher = props.max ? props.length > props.max : false
     const adjective = isHigher ? 'lower' : 'higher'
     const desired = isHigher ? props.max : props.min
     const capitalizedValue = new Param(props.param).capitalizedValue

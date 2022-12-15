@@ -1,4 +1,6 @@
-module.exports = {
+import { Config } from 'jest'
+
+const config: Config = {
   bail: true,
   roots: ['<rootDir>/__tests__'],
   clearMocks: true,
@@ -15,3 +17,5 @@ module.exports = {
   },
   testPathIgnorePatterns: ['mock*']
 }
+
+export default config

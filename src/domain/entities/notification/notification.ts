@@ -1,10 +1,10 @@
 import { randomUUID } from 'node:crypto'
-import { Content } from './content-entity'
-import { Replace } from './replace-entity'
+import { Replace } from '../helpers/replace'
+import { NotificationContent } from './notification-content'
 
 export interface NotificationProps {
   recipientId: string
-  content: Content
+  content: string
   category: string
   readAt?: Date | null
   createdAt: Date
@@ -34,11 +34,11 @@ export class Notification {
     return this.props.recipientId
   }
 
-  public set content(content: Content) {
-    this.props.content = content
+  public set content(content: string) {
+    this.props.content = new NotificationContent(content).value
   }
 
-  public get content(): Content {
+  public get content(): string {
     return this.props.content
   }
 
