@@ -1,8 +1,8 @@
 import { ISendNotification } from '@/domain/usecases'
 import { SendNotification } from '@/services/usecases'
 import { throwError } from '@/tests/domain/mocks'
+import { CreateNotificationRepository } from '@/tests/services/mocks/database/mock-notification-repository'
 import { faker } from '@faker-js/faker'
-import { CreateNotificationRepository } from '../../mocks/database/mock-notification-repository'
 
 interface Sut {
   sut: SendNotification

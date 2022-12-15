@@ -1,3 +1,4 @@
+import { NotificationMapper } from '@/domain/mappers/notification-mapper'
 import { ISendNotification } from '@/domain/usecases'
 import { SendNotificationBody } from '@/presentation/dtos'
 import { IController } from '@/presentation/protocols/controller'
@@ -17,6 +18,8 @@ export class SendNotificationController implements IController {
       category
     })
 
-    return { notification }
+    return {
+      notification: new NotificationMapper(notification).toHTTP()
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Param } from '../helpers/param'
+import { Param } from '@/domain/entities'
 
 export class LengthError extends Error {
   constructor(props: LengthError.Props) {

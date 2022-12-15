@@ -1,5 +1,5 @@
 import { PrismaService } from '@/infra/database/prisma'
-import { AppModule } from '@/main/modules'
+import { AppModule } from '@/main/modules/app.module'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 

@@ -1,3 +1,4 @@
+import { NotificationMapper } from '@/domain/mappers/notification-mapper'
 import { SendNotificationController } from '@/presentation/controllers'
 import { SendNotificationBody } from '@/presentation/dtos'
 import { throwError } from '@/tests/domain/mocks'
@@ -39,9 +40,12 @@ describe('SendNotificationController', () => {
     const { sut, sendNotificationSpy } = makeSut()
     const request = mockRequest()
 
-    const { notification } = await sut.handle(request)
+    const result = await sut.handle(request)
 
-    expect(notification).toStrictEqual(sendNotificationSpy.result.notification)
+    const expected = new NotificationMapper(
+      sendNotificationSpy.result.notification
+    ).toHTTP()
+    expect(result.notification).toStrictEqual(expected)
   })
 
   it('should throw if any dependency throws', async () => {

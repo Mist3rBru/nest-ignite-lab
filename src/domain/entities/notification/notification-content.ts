@@ -1,4 +1,4 @@
-import { LengthError } from '../errors/length-error'
+import { LengthError } from '@/domain/entities'
 
 export class NotificationContent {
   private readonly content: string
