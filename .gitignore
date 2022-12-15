@@ -1,8 +1,9 @@
 node_modules/
 coverage/
 dist/
+.vscode/
 
-prisma/*.db
+prisma/*.db*
 
 package-lock.json
 yarn.lock

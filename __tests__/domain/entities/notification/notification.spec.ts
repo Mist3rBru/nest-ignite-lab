@@ -59,10 +59,9 @@ describe('Notification', () => {
     sut.category = newProps.category
     sut.readAt = newProps.readAt
 
-    expect(sut.category).toStrictEqual(newProps.category)
-    expect(sut.content).toStrictEqual(newProps.content)
     expect(sut.recipientId).toStrictEqual(newProps.recipientId)
+    expect(sut.content).toStrictEqual(newProps.content)
+    expect(sut.category).toStrictEqual(newProps.category)
     expect(sut.readAt).toStrictEqual(newProps.readAt)
-    expect(sut.createdAt).toStrictEqual(newProps.createdAt)
   })
 })
