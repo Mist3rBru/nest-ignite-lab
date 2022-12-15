@@ -2,7 +2,7 @@ import { NotificationMapper } from '@/domain/mappers/notification-mapper'
 import { SendNotificationController } from '@/presentation/controllers'
 import { SendNotificationBody } from '@/presentation/dtos'
 import { throwError } from '@/tests/domain/mocks'
-import { SendNotificationSpy } from '@/tests/presentation/mocks/mock-send-notification.service'
+import { SendNotificationSpy } from '@/tests/presentation/mocks/mock-notification.service'
 import { faker } from '@faker-js/faker'
 
 interface Sut {
