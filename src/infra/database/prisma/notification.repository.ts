@@ -1,7 +1,9 @@
 import { Notification } from '@/domain/entities'
-import { INotificationRepository } from '@/services/protocols'
+import { ICreateNotificationRepository } from '@/services/protocols'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from './prisma.service'
+
+interface INotificationRepository extends ICreateNotificationRepository {}
 
 @Injectable()
 export class PrismaNotificationsRepository implements INotificationRepository {
@@ -11,7 +13,7 @@ export class PrismaNotificationsRepository implements INotificationRepository {
     await this.db.notification.create({
       data: {
         id: notification.id,
-        content: notification.content.value,
+        content: notification.content,
         category: notification.category,
         recipientId: notification.recipientId,
         readAt: notification.readAt,

@@ -11,7 +11,7 @@ export class SendNotificationController implements IController {
   async handle(@Body() body: SendNotificationBody) {
     const { recipientId, content, category } = body
 
-    const notification = await this.sendNotification.send({
+    const { notification } = await this.sendNotification.send({
       recipientId,
       content,
       category

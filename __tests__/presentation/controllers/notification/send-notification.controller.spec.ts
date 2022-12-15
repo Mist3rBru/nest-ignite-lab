@@ -41,14 +41,12 @@ describe('SendNotificationController', () => {
 
     const { notification } = await sut.handle(request)
 
-    expect(notification).toStrictEqual(sendNotificationSpy.result)
+    expect(notification).toStrictEqual(sendNotificationSpy.result.notification)
   })
 
   it('should throw if any dependency throws', async () => {
     const suts: SendNotificationController[] = [
-      new SendNotificationController(
-        { send: () => throwError() }
-      )
+      new SendNotificationController({ send: () => throwError() })
     ]
     for (const sut of suts) {
       const request = mockRequest()

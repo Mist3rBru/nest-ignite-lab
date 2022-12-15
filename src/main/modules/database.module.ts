@@ -13,6 +13,6 @@ import { Module } from '@nestjs/common'
       useClass: PrismaNotificationsRepository
     }
   ],
-  exports: [ICreateNotificationRepository]
+  exports: [PrismaService, ICreateNotificationRepository]
 })
 export class DatabaseModule {}
