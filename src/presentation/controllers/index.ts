@@ -1,1 +1,1 @@
-export * from './notification/create-notification.controller'
+export * from './notification/send-notification.controller'

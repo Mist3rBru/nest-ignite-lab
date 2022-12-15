@@ -1,6 +1,6 @@
 import { IsNotEmpty, Length } from 'class-validator'
 
-export class CreateNotificationBody {
+export class SendNotificationBody {
   @IsNotEmpty()
   recipientId: string
 

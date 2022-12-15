@@ -1,13 +1,14 @@
 import { ISendNotification } from '@/domain/usecases'
-import { CreateNotificationBody } from '@/presentation/dtos'
+import { SendNotificationBody } from '@/presentation/dtos'
+import { IController } from '@/presentation/protocols/controller'
 import { Body, Controller, Post } from '@nestjs/common'
 
 @Controller()
-export class NotificationsController {
+export class SendNotificationController implements IController {
   constructor(private readonly sendNotification: ISendNotification) {}
 
   @Post('notification')
-  async create(@Body() body: CreateNotificationBody) {
+  async handle(@Body() body: SendNotificationBody) {
     const { recipientId, content, category } = body
 
     const notification = await this.sendNotification.send({

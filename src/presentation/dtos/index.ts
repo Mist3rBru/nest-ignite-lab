@@ -1,1 +1,1 @@
-export * from './create-notification-body'
+export * from './send-notification-body'
