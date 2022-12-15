@@ -1,4 +1,4 @@
-import { ICancelNotification, IReadNotification, ISendNotification } from '@/domain/usecases'
+import { ICancelNotification, IReadNotification, ISendNotification, IUnreadNotification } from '@/domain/usecases'
 import { mockNotification } from '@/tests/domain/mocks'
 
 export class SendNotificationSpy implements ISendNotification {
@@ -32,6 +32,16 @@ export class ReadNotificationSpy implements IReadNotification {
   notificationId: string
 
   async read(notificationId: string): Promise<void> {
+    this.calledTimes++
+    this.notificationId = notificationId
+  }
+}
+
+export class UnreadNotificationSpy implements IUnreadNotification {
+  calledTimes: number = 0
+  notificationId: string
+
+  async unread(notificationId: string): Promise<void> {
     this.calledTimes++
     this.notificationId = notificationId
   }

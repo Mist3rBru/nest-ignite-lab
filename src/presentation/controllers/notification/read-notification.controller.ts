@@ -4,10 +4,10 @@ import { Controller, Param, Patch } from '@nestjs/common'
 
 @Controller()
 export class ReadNotificationController implements IController {
-  constructor(private readonly cancelNotification: IReadNotification) {}
+  constructor(private readonly readNotification: IReadNotification) {}
 
-  @Patch('notification/:notificationId/cancel')
+  @Patch('notification/:notificationId/read')
   async handle(@Param('notificationId') notificationId: string) {
-    await this.cancelNotification.read(notificationId)
+    await this.readNotification.read(notificationId)
   }
 }
