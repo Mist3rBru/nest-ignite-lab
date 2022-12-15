@@ -4,6 +4,7 @@ import {
   PrismaService
 } from '@/infra/database/prisma'
 import { mockNotification } from '@/tests/domain/mocks'
+import { faker } from '@faker-js/faker'
 import { Test } from '@nestjs/testing'
 
 const makeSut = async (): Promise<PrismaNotificationsRepository> => {
@@ -16,6 +17,14 @@ const makeSut = async (): Promise<PrismaNotificationsRepository> => {
 
 describe('PrismaNotificationRepository', () => {
   const db = new PrismaService()
+
+  beforeAll(async () => {
+    await db.notification.deleteMany()
+  })
+
+  afterEach(async () => {
+    await db.notification.deleteMany()
+  })
 
   describe('create()', () => {
     it('should create a notification register', async () => {
@@ -39,7 +48,9 @@ describe('PrismaNotificationRepository', () => {
       const sut = await makeSut()
       const data = mockNotification()
 
-      await sut.create(data)
+      await db.notification.create({
+        data: new NotificationMapper(data).toPrisma()
+      })
       const result = await sut.findById(data.id)
 
       expect(result).toStrictEqual(data)
@@ -51,6 +62,35 @@ describe('PrismaNotificationRepository', () => {
       const result = await sut.findById('')
 
       expect(result).toBeNull()
+    })
+  })
+
+  describe('findRecipientNotifications()', () => {
+    it('should find recipient notifications', async () => {
+      const sut = await makeSut()
+      const recipientId = faker.datatype.uuid()
+
+      await db.notification.create({
+        data: new NotificationMapper(
+          mockNotification({ recipientId })
+        ).toPrisma()
+      })
+      await db.notification.create({
+        data: new NotificationMapper(
+          mockNotification({ recipientId })
+        ).toPrisma()
+      })
+      const result = await sut.findRecipientNotifications(recipientId)
+
+      expect(result).toHaveLength(2)
+    })
+
+    it('should return empthy if no notification was found', async () => {
+      const sut = await makeSut()
+
+      const result = await sut.findRecipientNotifications('')
+
+      expect(result).toHaveLength(0)
     })
   })
 

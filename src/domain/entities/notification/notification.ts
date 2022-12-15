@@ -20,32 +20,20 @@ export class Notification {
     return this.props.id
   }
 
-  public set recipientId(recipientId: string) {
-    this.props.recipientId = recipientId
-  }
-
   public get recipientId(): string {
     return this.props.recipientId
-  }
-
-  public set content(content: string) {
-    this.props.content = new NotificationContent(content)
   }
 
   public get content(): string {
     return this.props.content.value
   }
 
-  public set category(category: string) {
-    this.props.category = category
-  }
-
   public get category(): string {
     return this.props.category
   }
 
-  public set readAt(readAt: Date | null) {
-    this.props.readAt = readAt
+  public read(): void {
+    this.props.readAt = new Date()
   }
 
   public get readAt(): Date | null {

@@ -52,23 +52,6 @@ describe('Notification', () => {
     expect(sut.createdAt).toStrictEqual(props.createdAt)
   })
 
-  it('should set new notification props', () => {
-    const props = mockProps()
-
-    const sut = makeSut(props)
-
-    const newProps = mockProps()
-    sut.category = newProps.category
-    sut.content = newProps.content
-    sut.recipientId = newProps.recipientId
-    sut.readAt = newProps.readAt as Date
-
-    expect(sut.category).toStrictEqual(newProps.category)
-    expect(sut.content).toStrictEqual(newProps.content)
-    expect(sut.recipientId).toStrictEqual(newProps.recipientId)
-    expect(sut.readAt).toStrictEqual(newProps.readAt)
-  })
-
   it('should soft cancel notification', () => {
     const props = mockProps()
 
@@ -76,5 +59,14 @@ describe('Notification', () => {
     sut.cancel()
 
     expect(sut.canceledAt).toStrictEqual(expect.any(Date))
+  })
+
+  it('should mark notification as read', () => {
+    const props = mockProps()
+
+    const sut = makeSut(props)
+    sut.read()
+
+    expect(sut.readAt).toStrictEqual(expect.any(Date))
   })
 })
