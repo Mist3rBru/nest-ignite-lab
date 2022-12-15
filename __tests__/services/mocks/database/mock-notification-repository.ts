@@ -2,6 +2,7 @@ import { Notification } from '@/domain/entities'
 import {
   ICreateNotificationRepository,
   IFindNotificationByIdRepository,
+  IFindRecipientNotificationsRepository,
   IUpdateNotificationRepository
 } from '@/services/protocols'
 import { mockNotification } from '@/tests/domain/mocks'
@@ -38,5 +39,20 @@ export class FindNotificationByIdRepositorySpy
     this.calledTimes++
     this.notificationId = notificationId
     return this.notification
+  }
+}
+
+export class FindRecipientNotificationsRepositorySpy
+  implements IFindRecipientNotificationsRepository {
+  calledTimes: number = 0
+  recipientId: string
+  notifications: Notification[] = [mockNotification()]
+
+  async findRecipientNotifications(
+    recipientId: string
+  ): Promise<Notification[]> {
+    this.calledTimes++
+    this.recipientId = recipientId
+    return this.notifications
   }
 }
