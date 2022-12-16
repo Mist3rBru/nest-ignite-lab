@@ -44,7 +44,7 @@ describe('SendNotificationController', () => {
 
     const expected = new NotificationMapper(
       sendNotificationSpy.result.notification
-    ).toHTTP()
+    ).toHttp('new')
     expect(result.notification).toStrictEqual(expected)
   })
 

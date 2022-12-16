@@ -38,7 +38,7 @@ describe('ListRecipientNotificationsController', () => {
 
     const expected = {
       notifications: listRecipientNotificationsSpy.result.notifications.map(n =>
-        new NotificationMapper(n).toHTTP()
+        new NotificationMapper(n).toHttp()
       )
     }
     expect(result).toStrictEqual(expected)

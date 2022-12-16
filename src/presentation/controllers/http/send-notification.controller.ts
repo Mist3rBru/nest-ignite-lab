@@ -19,7 +19,7 @@ export class SendNotificationController implements IController {
     })
 
     return {
-      notification: new NotificationMapper(notification).toHTTP()
+      notification: new NotificationMapper(notification).toHttp('new')
     }
   }
 }

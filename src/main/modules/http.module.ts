@@ -11,6 +11,7 @@ import { DatabaseModule } from '@/main/modules/database.module'
 import {
   CancelNotificationController,
   CountRecipientNotificationsController,
+  ListNewRecipientNotificationsController,
   ListRecipientNotificationsController,
   ReadNotificationController,
   SendNotificationController,
@@ -35,7 +36,8 @@ import { Module } from '@nestjs/common'
     CountRecipientNotificationsController,
     ReadNotificationController,
     UnreadNotificationController,
-    ListRecipientNotificationsController
+    ListRecipientNotificationsController,
+    ListNewRecipientNotificationsController
   ],
   providers: [
     {

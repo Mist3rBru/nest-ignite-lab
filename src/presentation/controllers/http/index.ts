@@ -1,5 +1,6 @@
 export * from './cancel-notification.controller'
 export * from './count-recipient-notifications.controller'
+export * from './list-new-recipient-notifications.controller'
 export * from './list-recipient-notifications.controller'
 export * from './read-notification.controller'
 export * from './send-notification.controller'

@@ -16,19 +16,29 @@ export class NotificationMapper {
     }
   }
 
-  public toHTTP(isNew?: boolean) {
+  public toHttp(type?: NotificationMapper.ToHttpTypes) {
     const http = {
       id: this.props.id,
       recipientId: this.props.recipientId,
       category: this.props.category,
-      content: this.props.content
+      content: this.props.content,
+      createdAt: this.props.createdAt
     }
-    if (!isNew) {
-      Object.assign(http, {
-        readAt: this.props.readAt,
-        canceledAt: this.props.canceledAt
-      })
+
+    switch (type) {
+      case 'new':
+        break
+      default:
+        Object.assign(http, {
+          readAt: this.props.readAt,
+          canceledAt: this.props.canceledAt
+        })
     }
+
     return http
   }
+}
+
+export namespace NotificationMapper {
+  export type ToHttpTypes = 'new'
 }
