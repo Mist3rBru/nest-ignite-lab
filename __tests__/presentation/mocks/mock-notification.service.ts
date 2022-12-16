@@ -1,6 +1,7 @@
 import {
   ICancelNotification,
   ICountRecipientNotifications,
+  IListRecipientNotifications,
   IReadNotification,
   ISendNotification,
   IUnreadNotification
@@ -65,6 +66,21 @@ export class CountRecipientNotificationsSpy
   async count(
     recipientId: string
   ): Promise<ICountRecipientNotifications.Result> {
+    this.calledTimes++
+    this.recipientId = recipientId
+    return this.result
+  }
+}
+
+export class ListRecipientNotificationsSpy
+  implements IListRecipientNotifications {
+  calledTimes: number = 0
+  recipientId: string
+  result: IListRecipientNotifications.Result = {
+    notifications: [mockNotification()]
+  }
+
+  async list(recipientId: string): Promise<IListRecipientNotifications.Result> {
     this.calledTimes++
     this.recipientId = recipientId
     return this.result
