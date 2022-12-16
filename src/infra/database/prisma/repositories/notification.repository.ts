@@ -3,8 +3,8 @@ import { NotificationMapper } from '@/domain/mappers/notification-mapper'
 import {
   ICreateNotificationRepository,
   IFindNotificationByIdRepository,
-  IUpdateNotificationRepository,
-  IFindRecipientNotificationsRepository
+  IFindRecipientNotificationsRepository,
+  IUpdateNotificationRepository
 } from '@/services/protocols'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
@@ -35,7 +35,9 @@ export class PrismaNotificationsRepository implements INotificationRepository {
     return data ? new Notification(data) : null
   }
 
-  async findRecipientNotifications(recipientId: string): Promise<Notification[]> {
+  async findRecipientNotifications(
+    recipientId: string
+  ): Promise<Notification[]> {
     const data = await this.db.notification.findMany({
       where: {
         recipientId

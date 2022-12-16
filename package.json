@@ -8,7 +8,7 @@
     "dev": "nest start --watch",
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "deploy": "npm run build && npm run start:prod",
+    "deploy": "npm run prisma:dev && npm run build && npm run start:prod",
     "format": "prettier --write . && eslint --fix .",
     "test": "jest --runInBand --no-cache",
     "test:w": "npm test -- --watch",
@@ -16,15 +16,19 @@
     "prisma": "prisma generate",
     "prisma:dev": "npm run prisma && prisma migrate dev",
     "prisma:prod": "npm run prisma && prisma migrate deploy",
-    "prisma:reset": "prisma migrate reset"
+    "prisma:reset": "prisma migrate reset",
+    "docker": "docker-compose up",
+    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up"
   },
   "dependencies": {
     "@nestjs/common": "^9.2.1",
     "@nestjs/core": "^9.2.1",
+    "@nestjs/microservices": "^9.2.1",
     "@nestjs/platform-express": "^9.2.1",
     "@prisma/client": "^4.7.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "kafkajs": "^2.2.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.6.0"
   },

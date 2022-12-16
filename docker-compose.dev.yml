@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  kafka:
+    environment:
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+
+  notifications:
+    container_name: notifications
+    image: notifications
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    restart: always
+    ports:
+      - '4000:4000'
+    environment:
+      - DB_URL=${DB_URL}
+      - APP_PORT=4000
+      - KAFKA_ID=notifications
+      - KAFKA_BROKER=kafka:9092
+      - KAFKA_RETRY_TIME=${KAFKA_RETRY_TIME}
+      - KAFKA_RETRY_TIMES=${KAFKA_RETRY_TIMES}
+    command: bash -c "npm run prisma:dev && npm start"
+    depends_on:
+      - kafka
+    networks:
+      - app-net

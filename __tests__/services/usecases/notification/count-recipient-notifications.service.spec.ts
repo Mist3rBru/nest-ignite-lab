@@ -45,7 +45,9 @@ describe('CountRecipientNotifications', () => {
 
   it('should throw if any dependency throws', async () => {
     const suts: CountRecipientNotifications[] = [
-      new CountRecipientNotifications({ findRecipientNotifications: () => throwError() })
+      new CountRecipientNotifications({
+        findRecipientNotifications: () => throwError()
+      })
     ]
     for (const sut of suts) {
       const promise = sut.count('')

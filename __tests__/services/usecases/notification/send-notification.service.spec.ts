@@ -32,7 +32,9 @@ describe('SendNotification', () => {
     const { notification } = await sut.send(request)
 
     expect(createNotificationRepositorySpy.calledTimes).toBe(1)
-    expect(createNotificationRepositorySpy.notification).toStrictEqual(notification)
+    expect(createNotificationRepositorySpy.notification).toStrictEqual(
+      notification
+    )
   })
 
   it('should throw if any dependency throws', async () => {
