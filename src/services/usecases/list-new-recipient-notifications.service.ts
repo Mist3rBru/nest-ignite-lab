@@ -18,7 +18,7 @@ export class ListNewRecipientNotifications
       )
 
     return {
-      notifications: notifications.filter(n => !(n.canceledAt ?? n.readAt))
+      notifications: notifications.filter(n => n.isNew)
     }
   }
 }

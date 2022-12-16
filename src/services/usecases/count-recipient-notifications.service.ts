@@ -18,7 +18,7 @@ export class CountRecipientNotifications
       )
 
     return {
-      count: notifications.length
+      count: notifications.filter(n => n.isNew).length
     }
   }
 }

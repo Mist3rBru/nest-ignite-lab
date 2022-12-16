@@ -33,7 +33,7 @@ export class Notification {
   }
 
   public read(): void {
-    this.props.readAt = new Date()
+    this.props.readAt = this.props.readAt ?? new Date()
   }
 
   public unread(): void {
@@ -45,7 +45,7 @@ export class Notification {
   }
 
   public cancel(): void {
-    this.props.canceledAt = new Date()
+    this.props.canceledAt = this.props.canceledAt ?? new Date()
   }
 
   public get canceledAt(): Date | null {
@@ -54,6 +54,10 @@ export class Notification {
 
   public get createdAt(): Date {
     return this.props.createdAt
+  }
+
+  public get isNew(): boolean {
+    return !(this.readAt ?? this.canceledAt)
   }
 }
 
