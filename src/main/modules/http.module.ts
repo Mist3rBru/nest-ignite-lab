@@ -1,12 +1,36 @@
-import { ICancelNotification, ISendNotification } from '@/domain/usecases'
+import {
+  ICancelNotification,
+  ICountRecipientNotifications,
+  IReadNotification,
+  ISendNotification,
+  IUnreadNotification
+} from '@/domain/usecases'
 import { DatabaseModule } from '@/main/modules/database.module'
-import { CancelNotificationController, SendNotificationController } from '@/presentation/controllers'
-import { CancelNotification, SendNotification } from '@/services/usecases'
+import {
+  CancelNotificationController,
+  CountRecipientNotificationsController,
+  ReadNotificationController,
+  SendNotificationController,
+  UnreadNotificationController
+} from '@/presentation/controllers'
+import {
+  CancelNotification,
+  CountRecipientNotifications,
+  ReadNotification,
+  SendNotification,
+  UnreadNotification
+} from '@/services/usecases'
 import { Module } from '@nestjs/common'
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [SendNotificationController, CancelNotificationController],
+  controllers: [
+    SendNotificationController,
+    CancelNotificationController,
+    CountRecipientNotificationsController,
+    ReadNotificationController,
+    UnreadNotificationController
+  ],
   providers: [
     {
       provide: ISendNotification,
@@ -15,6 +39,22 @@ import { Module } from '@nestjs/common'
     {
       provide: ICancelNotification,
       useClass: CancelNotification
+    },
+    {
+      provide: ICountRecipientNotifications,
+      useClass: CountRecipientNotifications
+    },
+    {
+      provide: IReadNotification,
+      useClass: ReadNotification
+    },
+    {
+      provide: IUnreadNotification,
+      useClass: UnreadNotification
+    },
+    {
+      provide: IUnreadNotification,
+      useClass: UnreadNotification
     }
   ]
 })

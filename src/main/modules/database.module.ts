@@ -5,6 +5,7 @@ import {
 import {
   ICreateNotificationRepository,
   IFindNotificationByIdRepository,
+  IFindRecipientNotificationsRepository,
   IUpdateNotificationRepository
 } from '@/services/protocols'
 import { Module } from '@nestjs/common'
@@ -23,13 +24,17 @@ import { Module } from '@nestjs/common'
     {
       provide: IUpdateNotificationRepository,
       useClass: PrismaNotificationsRepository
+    },
+    {
+      provide: IFindRecipientNotificationsRepository,
+      useClass: PrismaNotificationsRepository
     }
   ],
   exports: [
-    PrismaService,
     ICreateNotificationRepository,
     IFindNotificationByIdRepository,
-    IUpdateNotificationRepository
+    IUpdateNotificationRepository,
+    IFindRecipientNotificationsRepository
   ]
 })
 export class DatabaseModule {}
