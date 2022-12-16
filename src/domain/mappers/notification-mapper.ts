@@ -16,12 +16,19 @@ export class NotificationMapper {
     }
   }
 
-  public toHTTP() {
-    return {
+  public toHTTP(isNew?: boolean) {
+    const http = {
       id: this.props.id,
       recipientId: this.props.recipientId,
       category: this.props.category,
       content: this.props.content
     }
+    if (!isNew) {
+      Object.assign(http, {
+        readAt: this.props.readAt,
+        canceledAt: this.props.canceledAt
+      })
+    }
+    return http
   }
 }

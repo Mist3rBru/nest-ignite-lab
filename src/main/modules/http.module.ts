@@ -1,6 +1,7 @@
 import {
   ICancelNotification,
   ICountRecipientNotifications,
+  IListNewRecipientNotifications,
   IListRecipientNotifications,
   IReadNotification,
   ISendNotification,
@@ -18,6 +19,7 @@ import {
 import {
   CancelNotification,
   CountRecipientNotifications,
+  ListNewRecipientNotifications,
   ListRecipientNotifications,
   ReadNotification,
   SendNotification,
@@ -63,6 +65,10 @@ import { Module } from '@nestjs/common'
     {
       provide: IListRecipientNotifications,
       useClass: ListRecipientNotifications
+    },
+    {
+      provide: IListNewRecipientNotifications,
+      useClass: ListNewRecipientNotifications
     }
   ]
 })
