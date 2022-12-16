@@ -1,5 +1,5 @@
+import { NotificationMapper } from '@/domain/mappers'
 import {
-  NotificationMapper,
   PrismaNotificationsRepository,
   PrismaService
 } from '@/infra/database/prisma'
