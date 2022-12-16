@@ -1,3 +1,2 @@
-export * from '../../../domain/mappers/notification-mapper'
+export * from './notification.repository'
 export * from './prisma.service'
-export * from './repositories/notification.repository'

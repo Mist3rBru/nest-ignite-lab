@@ -1,16 +1,16 @@
-import { UnreadNotificationController } from '@/presentation/controllers'
+import { CancelNotificationController } from '@/presentation/controllers/http'
 import { throwError } from '@/tests/domain/mocks'
-import { UnreadNotificationSpy } from '@/tests/presentation/mocks/mock-notification.service'
+import { CancelNotificationSpy } from '@/tests/presentation/mocks/mock-notification.service'
 import { faker } from '@faker-js/faker'
 
 interface Sut {
-  sut: UnreadNotificationController
-  cancelNotificationSpy: UnreadNotificationSpy
+  sut: CancelNotificationController
+  cancelNotificationSpy: CancelNotificationSpy
 }
 
 const makeSut = (): Sut => {
-  const cancelNotificationSpy = new UnreadNotificationSpy()
-  const sut = new UnreadNotificationController(cancelNotificationSpy)
+  const cancelNotificationSpy = new CancelNotificationSpy()
+  const sut = new CancelNotificationController(cancelNotificationSpy)
   return {
     sut,
     cancelNotificationSpy
@@ -19,8 +19,8 @@ const makeSut = (): Sut => {
 
 const mockRequest = (): string => faker.datatype.uuid()
 
-describe('UnreadNotificationController', () => {
-  it('should call UnreadNotification', async () => {
+describe('CancelNotificationController', () => {
+  it('should call CancelNotification', async () => {
     const { sut, cancelNotificationSpy } = makeSut()
     const request = mockRequest()
 
@@ -31,8 +31,8 @@ describe('UnreadNotificationController', () => {
   })
 
   it('should throw if any dependency throws', async () => {
-    const suts: UnreadNotificationController[] = [
-      new UnreadNotificationController({ unread: () => throwError() })
+    const suts: CancelNotificationController[] = [
+      new CancelNotificationController({ cancel: () => throwError() })
     ]
     for (const sut of suts) {
       const request = mockRequest()

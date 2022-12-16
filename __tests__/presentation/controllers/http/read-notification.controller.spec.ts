@@ -1,4 +1,4 @@
-import { ReadNotificationController } from '@/presentation/controllers'
+import { ReadNotificationController } from '@/presentation/controllers/http'
 import { throwError } from '@/tests/domain/mocks'
 import { ReadNotificationSpy } from '@/tests/presentation/mocks/mock-notification.service'
 import { faker } from '@faker-js/faker'

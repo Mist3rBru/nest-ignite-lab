@@ -14,7 +14,7 @@ import {
   ReadNotificationController,
   SendNotificationController,
   UnreadNotificationController
-} from '@/presentation/controllers'
+} from '@/presentation/controllers/http'
 import {
   CancelNotification,
   CountRecipientNotifications,

@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { MicroserviceOptions } from '@nestjs/microservices'
 
+const port = process.env.APP_PORT as string
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
@@ -12,14 +13,15 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     strategy: await app.get(KafkaConsumerService)
   })
+  await app.startAllMicroservices()
 
-  await app.listen(process.env.APP_PORT)
+  await app.listen(port)
 }
 
 bootstrap()
   .then(() => {
     process.stdout.write(
-      `🚀 Server is running on http://localhost:${process.env.APP_PORT}\n`
+      `🚀 Server is running on http://localhost:${port}\n`
     )
   })
   .catch(err => {

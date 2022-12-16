@@ -1,5 +1,5 @@
 import { NotificationMapper } from '@/domain/mappers/notification-mapper'
-import { SendNotificationController } from '@/presentation/controllers'
+import { SendNotificationController } from '@/presentation/controllers/http'
 import { SendNotificationBody } from '@/presentation/dtos'
 import { throwError } from '@/tests/domain/mocks'
 import { SendNotificationSpy } from '@/tests/presentation/mocks/mock-notification.service'

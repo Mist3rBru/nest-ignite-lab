@@ -1,5 +1,5 @@
 import { NotificationMapper } from '@/domain/mappers'
-import { ListRecipientNotificationsController } from '@/presentation/controllers'
+import { ListRecipientNotificationsController } from '@/presentation/controllers/http'
 import { throwError } from '@/tests/domain/mocks'
 import { ListRecipientNotificationsSpy } from '@/tests/presentation/mocks/mock-notification.service'
 import { faker } from '@faker-js/faker'
