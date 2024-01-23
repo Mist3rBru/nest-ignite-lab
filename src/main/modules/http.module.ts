@@ -5,9 +5,8 @@ import {
   IListRecipientNotifications,
   IReadNotification,
   ISendNotification,
-  IUnreadNotification
+  IUnreadNotification,
 } from '@/domain/usecases'
-import { DatabaseModule } from '@/main/modules/database.module'
 import {
   CancelNotificationController,
   CountRecipientNotificationsController,
@@ -15,7 +14,7 @@ import {
   ListRecipientNotificationsController,
   ReadNotificationController,
   SendNotificationController,
-  UnreadNotificationController
+  UnreadNotificationController,
 } from '@/presentation/controllers/http'
 import {
   CancelNotification,
@@ -24,8 +23,9 @@ import {
   ListRecipientNotifications,
   ReadNotification,
   SendNotification,
-  UnreadNotification
+  UnreadNotification,
 } from '@/services/usecases'
+import { DatabaseModule } from '@/main/modules/database.module'
 import { Module } from '@nestjs/common'
 
 @Module({
@@ -37,41 +37,41 @@ import { Module } from '@nestjs/common'
     ReadNotificationController,
     UnreadNotificationController,
     ListRecipientNotificationsController,
-    ListNewRecipientNotificationsController
+    ListNewRecipientNotificationsController,
   ],
   providers: [
     {
       provide: ISendNotification,
-      useClass: SendNotification
+      useClass: SendNotification,
     },
     {
       provide: ICancelNotification,
-      useClass: CancelNotification
+      useClass: CancelNotification,
     },
     {
       provide: ICountRecipientNotifications,
-      useClass: CountRecipientNotifications
+      useClass: CountRecipientNotifications,
     },
     {
       provide: IReadNotification,
-      useClass: ReadNotification
+      useClass: ReadNotification,
     },
     {
       provide: IUnreadNotification,
-      useClass: UnreadNotification
+      useClass: UnreadNotification,
     },
     {
       provide: IUnreadNotification,
-      useClass: UnreadNotification
+      useClass: UnreadNotification,
     },
     {
       provide: IListRecipientNotifications,
-      useClass: ListRecipientNotifications
+      useClass: ListRecipientNotifications,
     },
     {
       provide: IListNewRecipientNotifications,
-      useClass: ListNewRecipientNotifications
-    }
-  ]
+      useClass: ListNewRecipientNotifications,
+    },
+  ],
 })
 export class HttpModule {}

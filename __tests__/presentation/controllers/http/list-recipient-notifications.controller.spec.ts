@@ -12,18 +12,19 @@ interface Sut {
 const makeSut = (): Sut => {
   const listRecipientNotificationsSpy = new ListRecipientNotificationsSpy()
   const sut = new ListRecipientNotificationsController(
-    listRecipientNotificationsSpy
+    listRecipientNotificationsSpy,
   )
+
   return {
     sut,
-    listRecipientNotificationsSpy
+    listRecipientNotificationsSpy,
   }
 }
 
 describe('ListRecipientNotificationsController', () => {
   it('should call ListRecipientNotifications', async () => {
     const { sut, listRecipientNotificationsSpy } = makeSut()
-    const recipientId = faker.datatype.uuid()
+    const recipientId = faker.string.uuid()
 
     await sut.handle(recipientId)
 
@@ -38,16 +39,17 @@ describe('ListRecipientNotificationsController', () => {
 
     const expected = {
       notifications: listRecipientNotificationsSpy.result.notifications.map(n =>
-        new NotificationMapper(n).toHttp()
-      )
+        new NotificationMapper(n).toHttp(),
+      ),
     }
     expect(result).toStrictEqual(expected)
   })
 
   it('should throw if any dependency throws', async () => {
     const suts: ListRecipientNotificationsController[] = [
-      new ListRecipientNotificationsController({ list: () => throwError() })
+      new ListRecipientNotificationsController({ list: () => throwError() }),
     ]
+
     for (const sut of suts) {
       const promise = sut.handle('')
       await expect(promise).rejects.toThrow()

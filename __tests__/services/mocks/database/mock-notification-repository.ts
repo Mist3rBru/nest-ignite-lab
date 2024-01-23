@@ -1,14 +1,15 @@
-import { Notification } from '@/domain/entities'
+import { type Notification } from '@/domain/entities'
 import {
-  ICreateNotificationRepository,
-  IFindNotificationByIdRepository,
-  IFindRecipientNotificationsRepository,
-  IUpdateNotificationRepository
+  type ICreateNotificationRepository,
+  type IFindNotificationByIdRepository,
+  type IFindRecipientNotificationsRepository,
+  type IUpdateNotificationRepository,
 } from '@/services/protocols'
 import { mockNotification } from '@/tests/domain/mocks'
 
 export class CreateNotificationRepositorySpy
-  implements ICreateNotificationRepository {
+  implements ICreateNotificationRepository
+{
   calledTimes: number = 0
   notification: Notification
 
@@ -19,7 +20,8 @@ export class CreateNotificationRepositorySpy
 }
 
 export class UpdateNotificationRepositorySpy
-  implements IUpdateNotificationRepository {
+  implements IUpdateNotificationRepository
+{
   calledTimes: number = 0
   notification: Notification
 
@@ -30,7 +32,8 @@ export class UpdateNotificationRepositorySpy
 }
 
 export class FindNotificationByIdRepositorySpy
-  implements IFindNotificationByIdRepository {
+  implements IFindNotificationByIdRepository
+{
   calledTimes: number = 0
   notificationId: string
   notification: Notification | null = mockNotification()
@@ -38,21 +41,24 @@ export class FindNotificationByIdRepositorySpy
   async findById(notificationId: string): Promise<Notification | null> {
     this.calledTimes++
     this.notificationId = notificationId
+
     return this.notification
   }
 }
 
 export class FindRecipientNotificationsRepositorySpy
-  implements IFindRecipientNotificationsRepository {
+  implements IFindRecipientNotificationsRepository
+{
   calledTimes: number = 0
   recipientId: string
   notifications: Notification[] = [mockNotification()]
 
   async findRecipientNotifications(
-    recipientId: string
+    recipientId: string,
   ): Promise<Notification[]> {
     this.calledTimes++
     this.recipientId = recipientId
+
     return this.notifications
   }
 }

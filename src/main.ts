@@ -2,16 +2,17 @@ import { KafkaConsumerService } from '@/infra/messaging/kafka/kafka.service'
 import { AppModule } from '@/main/modules/app.module'
 import { ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { MicroserviceOptions } from '@nestjs/microservices'
+import { type MicroserviceOptions } from '@nestjs/microservices'
 
 const port = process.env.APP_PORT
-async function bootstrap() {
+
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule)
 
   app.useGlobalPipes(new ValidationPipe())
 
   app.connectMicroservice<MicroserviceOptions>({
-    strategy: await app.get(KafkaConsumerService)
+    strategy: await app.get(KafkaConsumerService),
   })
 
   void app.startAllMicroservices()
@@ -22,6 +23,6 @@ bootstrap()
   .then(() => {
     process.stdout.write(`🚀 Server is running on http://localhost:${port}\n`)
   })
-  .catch(err => {
-    console.error(err)
+  .catch(error => {
+    console.error(error)
   })

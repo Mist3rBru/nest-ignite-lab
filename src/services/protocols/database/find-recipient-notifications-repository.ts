@@ -1,7 +1,7 @@
-import { Notification } from '@/domain/entities'
+import { type Notification } from '@/domain/entities'
 
 export abstract class IFindRecipientNotificationsRepository {
   abstract findRecipientNotifications(
-    recipientId: string
+    recipientId: string,
   ): Promise<Notification[]>
 }

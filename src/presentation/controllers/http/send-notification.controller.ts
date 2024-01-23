@@ -1,7 +1,7 @@
 import { NotificationMapper } from '@/domain/mappers/notification-mapper'
 import { ISendNotification } from '@/domain/usecases'
 import { SendNotificationBody } from '@/presentation/dtos'
-import { IController } from '@/presentation/protocols'
+import { type IController } from '@/presentation/protocols'
 import { Body, Controller, Post } from '@nestjs/common'
 
 @Controller()
@@ -15,11 +15,11 @@ export class SendNotificationController implements IController {
     const { notification } = await this.sendNotification.send({
       recipientId,
       content,
-      category
+      category,
     })
 
     return {
-      notification: new NotificationMapper(notification).toHttp('new')
+      notification: new NotificationMapper(notification).toHttp('new'),
     }
   }
 }

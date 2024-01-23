@@ -1,6 +1,6 @@
 export abstract class ICountRecipientNotifications {
   abstract count(
-    recipientId: string
+    recipientId: string,
   ): Promise<ICountRecipientNotifications.Result>
 }
 

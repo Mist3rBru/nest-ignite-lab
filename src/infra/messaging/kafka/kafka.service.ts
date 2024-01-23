@@ -1,20 +1,21 @@
-import { Injectable, OnModuleDestroy } from '@nestjs/common'
+import { Injectable, type OnModuleDestroy } from '@nestjs/common'
 import { ServerKafka } from '@nestjs/microservices'
 
 @Injectable()
 export class KafkaConsumerService
   extends ServerKafka
-  implements OnModuleDestroy {
+  implements OnModuleDestroy
+{
   constructor() {
     super({
       client: {
         clientId: process.env.KAFKA_ID,
         brokers: [process.env.KAFKA_BROKER],
         retry: {
-          initialRetryTime: parseInt(process.env.KAFKA_RETRY_TIME),
-          retries: parseInt(process.env.KAFKA_RETRY_TIMES)
-        }
-      }
+          initialRetryTime: Number.parseInt(process.env.KAFKA_RETRY_TIME),
+          retries: Number.parseInt(process.env.KAFKA_RETRY_TIMES),
+        },
+      },
     })
   }
 

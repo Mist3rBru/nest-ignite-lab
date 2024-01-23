@@ -1,13 +1,13 @@
 import {
-  PrismaNotificationsRepository,
-  PrismaService
-} from '@/infra/database/prisma'
-import {
   ICreateNotificationRepository,
   IFindNotificationByIdRepository,
   IFindRecipientNotificationsRepository,
-  IUpdateNotificationRepository
+  IUpdateNotificationRepository,
 } from '@/services/protocols'
+import {
+  PrismaNotificationsRepository,
+  PrismaService,
+} from '@/infra/database/prisma'
 import { Module } from '@nestjs/common'
 
 @Module({
@@ -15,26 +15,26 @@ import { Module } from '@nestjs/common'
     PrismaService,
     {
       provide: ICreateNotificationRepository,
-      useClass: PrismaNotificationsRepository
+      useClass: PrismaNotificationsRepository,
     },
     {
       provide: IFindNotificationByIdRepository,
-      useClass: PrismaNotificationsRepository
+      useClass: PrismaNotificationsRepository,
     },
     {
       provide: IUpdateNotificationRepository,
-      useClass: PrismaNotificationsRepository
+      useClass: PrismaNotificationsRepository,
     },
     {
       provide: IFindRecipientNotificationsRepository,
-      useClass: PrismaNotificationsRepository
-    }
+      useClass: PrismaNotificationsRepository,
+    },
   ],
   exports: [
     ICreateNotificationRepository,
     IFindNotificationByIdRepository,
     IUpdateNotificationRepository,
-    IFindRecipientNotificationsRepository
-  ]
+    IFindRecipientNotificationsRepository,
+  ],
 })
 export class DatabaseModule {}

@@ -1,8 +1,8 @@
 import { NotFoundError } from '@/domain/entities'
-import { ICancelNotification } from '@/domain/usecases'
+import { type ICancelNotification } from '@/domain/usecases'
 import {
   IFindNotificationByIdRepository,
-  IUpdateNotificationRepository
+  IUpdateNotificationRepository,
 } from '@/services/protocols'
 import { Injectable } from '@nestjs/common'
 
@@ -10,13 +10,12 @@ import { Injectable } from '@nestjs/common'
 export class CancelNotification implements ICancelNotification {
   constructor(
     private readonly findNotificationByIdRepository: IFindNotificationByIdRepository,
-    private readonly updateNotificationRepository: IUpdateNotificationRepository
+    private readonly updateNotificationRepository: IUpdateNotificationRepository,
   ) {}
 
   async cancel(notificationId: string): Promise<void> {
-    const notification = await this.findNotificationByIdRepository.findById(
-      notificationId
-    )
+    const notification =
+      await this.findNotificationByIdRepository.findById(notificationId)
 
     if (!notification) {
       throw new NotFoundError('notification')

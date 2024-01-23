@@ -8,8 +8,9 @@ export class Param {
   }
 
   private capitalize(text: string): string {
-    const [first, ...rest] = text.split('')
-    return first.toUpperCase().concat(rest.join(''))
+    const [first, ...rest] = text
+
+    return [first.toUpperCase(), ...rest].join('')
   }
 
   get value(): string {

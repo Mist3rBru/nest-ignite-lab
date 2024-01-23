@@ -6,13 +6,13 @@ const makeSut = (props: Notification.Params): Notification => {
 }
 
 const mockProps = (): Notification.Params => ({
-  id: faker.datatype.uuid(),
+  id: faker.string.uuid(),
   category: faker.lorem.word(),
   content: faker.lorem.sentence(),
-  recipientId: faker.datatype.uuid(),
+  recipientId: faker.string.uuid(),
   createdAt: new Date(),
   readAt: null,
-  canceledAt: null
+  canceledAt: null,
 })
 
 describe('Notification', () => {

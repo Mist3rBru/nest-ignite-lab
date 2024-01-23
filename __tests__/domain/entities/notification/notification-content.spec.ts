@@ -21,7 +21,7 @@ describe('ContentEntity', () => {
       length: msg.length,
       min: 5,
       max: 240,
-      param: 'content'
+      param: 'content',
     })
 
     expect(() => makeSut(msg)).toThrow(error)
@@ -33,7 +33,7 @@ describe('ContentEntity', () => {
       length: msg.length,
       min: 5,
       max: 240,
-      param: 'content'
+      param: 'content',
     })
 
     expect(() => makeSut(msg)).toThrow(error)

@@ -1,4 +1,4 @@
-export declare global {
+declare global {
   namespace NodeJS {
     interface ProcessEnv {
       NODE_ENV: 'development' | 'production'
@@ -12,3 +12,5 @@ export declare global {
     }
   }
 }
+
+export {}

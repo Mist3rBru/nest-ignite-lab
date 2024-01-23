@@ -1,5 +1,5 @@
-import { Notification } from '@/domain/entities'
-import { Notification as PrismaNotification } from '@prisma/client'
+import { type Notification } from '@/domain/entities'
+import { type Notification as PrismaNotification } from '@prisma/client'
 
 export class NotificationMapper {
   constructor(private readonly props: Notification) {}
@@ -12,7 +12,7 @@ export class NotificationMapper {
       content: this.props.content,
       readAt: this.props.readAt,
       canceledAt: this.props.canceledAt,
-      createdAt: this.props.createdAt
+      createdAt: this.props.createdAt,
     }
   }
 
@@ -22,7 +22,7 @@ export class NotificationMapper {
       recipientId: this.props.recipientId,
       category: this.props.category,
       content: this.props.content,
-      createdAt: this.props.createdAt
+      createdAt: this.props.createdAt,
     }
 
     switch (type) {
@@ -31,7 +31,7 @@ export class NotificationMapper {
       default:
         Object.assign(http, {
           readAt: this.props.readAt,
-          canceledAt: this.props.canceledAt
+          canceledAt: this.props.canceledAt,
         })
     }
 

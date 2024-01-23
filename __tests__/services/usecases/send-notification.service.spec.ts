@@ -1,4 +1,4 @@
-import { ISendNotification } from '@/domain/usecases'
+import { type ISendNotification } from '@/domain/usecases'
 import { SendNotification } from '@/services/usecases'
 import { throwError } from '@/tests/domain/mocks'
 import { CreateNotificationRepositorySpy } from '@/tests/services/mocks/database/mock-notification-repository'
@@ -12,16 +12,17 @@ interface Sut {
 const makeSut = (): Sut => {
   const createNotificationRepositorySpy = new CreateNotificationRepositorySpy()
   const sut = new SendNotification(createNotificationRepositorySpy)
+
   return {
     sut,
-    createNotificationRepositorySpy
+    createNotificationRepositorySpy,
   }
 }
 
 const mockRequest = (): ISendNotification.Params => ({
   category: faker.lorem.word(),
   content: faker.lorem.sentence(),
-  recipientId: faker.datatype.uuid()
+  recipientId: faker.string.uuid(),
 })
 
 describe('SendNotification', () => {
@@ -33,14 +34,15 @@ describe('SendNotification', () => {
 
     expect(createNotificationRepositorySpy.calledTimes).toBe(1)
     expect(createNotificationRepositorySpy.notification).toStrictEqual(
-      notification
+      notification,
     )
   })
 
   it('should throw if any dependency throws', async () => {
     const suts: SendNotification[] = [
-      new SendNotification({ create: () => throwError() })
+      new SendNotification({ create: () => throwError() }),
     ]
+
     for (const sut of suts) {
       const request = mockRequest()
       const promise = sut.send(request)

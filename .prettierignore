@@ -1,9 +1,18 @@
-# Folders
 coverage/
 dist/
 node_modules/
+prisma/
+public/
 
-# Files
-package-lock.json
+.editorconfi
+.gitignore
+.npmrc
+.prettierignore
+.prettierrc
+.editorconfig
+Dockerfile
 yarn.lock
-pnpm-lock.yaml
+
+*.yml
+*.yaml
+*.json

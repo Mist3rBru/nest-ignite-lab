@@ -1,28 +1,31 @@
 {
   "compilerOptions": {
-    "target": "es6",
     "outDir": "dist",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "forceConsistentCasingInFileNames": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "moduleDetection": "force",
     "declaration": true,
     "removeComments": true,
+
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictBindCallApply": false,
+    "noImplicitAny": false,
+    "strictPropertyInitialization": false,
+
+    "skipLibCheck": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "incremental": true,
-    "skipLibCheck": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
-    "baseUrl": "src",
+
+    "baseUrl": ".",
     "paths": {
-      "@/tests/*": ["../__tests__/*"],
-      "@/*": ["*"]
-    }
-  }
+      "@/tests/*": ["__tests__/*"],
+      "@/*": ["src/*"],
+    },
+  },
 }

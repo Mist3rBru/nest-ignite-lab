@@ -1,9 +1,9 @@
-import { NotFoundError, Notification } from '@/domain/entities'
+import { NotFoundError } from '@/domain/entities'
 import { CancelNotification } from '@/services/usecases'
 import { throwError } from '@/tests/domain/mocks'
 import {
   FindNotificationByIdRepositorySpy,
-  UpdateNotificationRepositorySpy
+  UpdateNotificationRepositorySpy,
 } from '@/tests/services/mocks/database/mock-notification-repository'
 import { faker } from '@faker-js/faker'
 
@@ -19,12 +19,13 @@ const makeSut = (): Sut => {
   const updateNotificationRepositorySpy = new UpdateNotificationRepositorySpy()
   const sut = new CancelNotification(
     findNotificationByIdRepositorySpy,
-    updateNotificationRepositorySpy
+    updateNotificationRepositorySpy,
   )
+
   return {
     sut,
     findNotificationByIdRepositorySpy,
-    updateNotificationRepositorySpy
+    updateNotificationRepositorySpy,
   }
 }
 
@@ -32,12 +33,12 @@ describe('CancelNotification', () => {
   it('should call FindNotificationByIdNotificationRepository with notification id', async () => {
     const { sut, findNotificationByIdRepositorySpy } = makeSut()
 
-    const notificationId = faker.datatype.uuid()
+    const notificationId = faker.string.uuid()
     await sut.cancel(notificationId)
 
     expect(findNotificationByIdRepositorySpy.calledTimes).toBe(1)
     expect(findNotificationByIdRepositorySpy.notificationId).toBe(
-      notificationId
+      notificationId,
     )
   })
 
@@ -55,8 +56,7 @@ describe('CancelNotification', () => {
 
     await sut.cancel('')
 
-    const notification =
-      findNotificationByIdRepositorySpy.notification as Notification
+    const notification = findNotificationByIdRepositorySpy.notification!
     expect(notification.canceledAt).toStrictEqual(expect.any(Date))
   })
 
@@ -64,31 +64,32 @@ describe('CancelNotification', () => {
     const {
       sut,
       updateNotificationRepositorySpy,
-      findNotificationByIdRepositorySpy
+      findNotificationByIdRepositorySpy,
     } = makeSut()
 
     await sut.cancel('')
 
     expect(updateNotificationRepositorySpy.calledTimes).toBe(1)
     expect(updateNotificationRepositorySpy.notification).toStrictEqual(
-      findNotificationByIdRepositorySpy.notification
+      findNotificationByIdRepositorySpy.notification,
     )
   })
 
   it('should throw if any dependency throws', async () => {
     const {
       findNotificationByIdRepositorySpy,
-      updateNotificationRepositorySpy
+      updateNotificationRepositorySpy,
     } = makeSut()
     const suts: CancelNotification[] = [
       new CancelNotification(
         { findById: () => throwError() },
-        updateNotificationRepositorySpy
+        updateNotificationRepositorySpy,
       ),
       new CancelNotification(findNotificationByIdRepositorySpy, {
-        update: () => throwError()
-      })
+        update: () => throwError(),
+      }),
     ]
+
     for (const sut of suts) {
       const promise = sut.cancel('')
       await expect(promise).rejects.toThrow()

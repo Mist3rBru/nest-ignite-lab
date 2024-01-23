@@ -11,24 +11,25 @@ interface Sut {
 const makeSut = (): Sut => {
   const countRecipientNotificationsSpy = new CountRecipientNotificationsSpy()
   const sut = new CountRecipientNotificationsController(
-    countRecipientNotificationsSpy
+    countRecipientNotificationsSpy,
   )
+
   return {
     sut,
-    countRecipientNotificationsSpy
+    countRecipientNotificationsSpy,
   }
 }
 
 describe('CountRecipientNotificationsController', () => {
   it('should call CountRecipientNotifications', async () => {
     const { sut, countRecipientNotificationsSpy } = makeSut()
-    const recipientId = faker.datatype.uuid()
+    const recipientId = faker.string.uuid()
 
     await sut.handle(recipientId)
 
     expect(countRecipientNotificationsSpy.calledTimes).toBe(1)
     expect(countRecipientNotificationsSpy.recipientId).toStrictEqual(
-      recipientId
+      recipientId,
     )
   })
 
@@ -38,15 +39,16 @@ describe('CountRecipientNotificationsController', () => {
     const result = await sut.handle('')
 
     const expected = {
-      count: countRecipientNotificationsSpy.result.count
+      count: countRecipientNotificationsSpy.result.count,
     }
     expect(result).toStrictEqual(expected)
   })
 
   it('should throw if any dependency throws', async () => {
     const suts: CountRecipientNotificationsController[] = [
-      new CountRecipientNotificationsController({ count: () => throwError() })
+      new CountRecipientNotificationsController({ count: () => throwError() }),
     ]
+
     for (const sut of suts) {
       const promise = sut.handle('')
       await expect(promise).rejects.toThrow()

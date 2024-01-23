@@ -1,9 +1,9 @@
-import { NotFoundError, Notification } from '@/domain/entities'
+import { NotFoundError } from '@/domain/entities'
 import { UnreadNotification } from '@/services/usecases'
 import { throwError } from '@/tests/domain/mocks'
 import {
   FindNotificationByIdRepositorySpy,
-  UpdateNotificationRepositorySpy
+  UpdateNotificationRepositorySpy,
 } from '@/tests/services/mocks/database/mock-notification-repository'
 import { faker } from '@faker-js/faker'
 
@@ -19,12 +19,13 @@ const makeSut = (): Sut => {
   const updateNotificationRepositorySpy = new UpdateNotificationRepositorySpy()
   const sut = new UnreadNotification(
     findNotificationByIdRepositorySpy,
-    updateNotificationRepositorySpy
+    updateNotificationRepositorySpy,
   )
+
   return {
     sut,
     findNotificationByIdRepositorySpy,
-    updateNotificationRepositorySpy
+    updateNotificationRepositorySpy,
   }
 }
 
@@ -32,12 +33,12 @@ describe('UnreadNotification', () => {
   it('should call FindNotificationByIdNotificationRepository with notification id', async () => {
     const { sut, findNotificationByIdRepositorySpy } = makeSut()
 
-    const notificationId = faker.datatype.uuid()
+    const notificationId = faker.string.uuid()
     await sut.unread(notificationId)
 
     expect(findNotificationByIdRepositorySpy.calledTimes).toBe(1)
     expect(findNotificationByIdRepositorySpy.notificationId).toBe(
-      notificationId
+      notificationId,
     )
   })
 
@@ -55,8 +56,7 @@ describe('UnreadNotification', () => {
 
     await sut.unread('')
 
-    const notification =
-      findNotificationByIdRepositorySpy.notification as Notification
+    const notification = findNotificationByIdRepositorySpy.notification!
     expect(notification.readAt).toBeNull()
   })
 
@@ -64,31 +64,32 @@ describe('UnreadNotification', () => {
     const {
       sut,
       updateNotificationRepositorySpy,
-      findNotificationByIdRepositorySpy
+      findNotificationByIdRepositorySpy,
     } = makeSut()
 
     await sut.unread('')
 
     expect(updateNotificationRepositorySpy.calledTimes).toBe(1)
     expect(updateNotificationRepositorySpy.notification).toStrictEqual(
-      findNotificationByIdRepositorySpy.notification
+      findNotificationByIdRepositorySpy.notification,
     )
   })
 
   it('should throw if any dependency throws', async () => {
     const {
       findNotificationByIdRepositorySpy,
-      updateNotificationRepositorySpy
+      updateNotificationRepositorySpy,
     } = makeSut()
     const suts: UnreadNotification[] = [
       new UnreadNotification(
         { findById: () => throwError() },
-        updateNotificationRepositorySpy
+        updateNotificationRepositorySpy,
       ),
       new UnreadNotification(findNotificationByIdRepositorySpy, {
-        update: () => throwError()
-      })
+        update: () => throwError(),
+      }),
     ]
+
     for (const sut of suts) {
       const promise = sut.unread('')
       await expect(promise).rejects.toThrow()

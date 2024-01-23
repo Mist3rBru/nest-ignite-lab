@@ -12,24 +12,25 @@ const makeSut = (): Sut => {
   const findRecipientNotificationsRepositorySpy =
     new FindRecipientNotificationsRepositorySpy()
   const sut = new ListRecipientNotifications(
-    findRecipientNotificationsRepositorySpy
+    findRecipientNotificationsRepositorySpy,
   )
+
   return {
     sut,
-    findRecipientNotificationsRepositorySpy
+    findRecipientNotificationsRepositorySpy,
   }
 }
 
 describe('ListRecipientNotifications', () => {
   it('should call FindRecipientNotificationsRepository with recipient id', async () => {
     const { sut, findRecipientNotificationsRepositorySpy } = makeSut()
-    const recipientId = faker.datatype.uuid()
+    const recipientId = faker.string.uuid()
 
     await sut.list(recipientId)
 
     expect(findRecipientNotificationsRepositorySpy.calledTimes).toBe(1)
     expect(findRecipientNotificationsRepositorySpy.recipientId).toStrictEqual(
-      recipientId
+      recipientId,
     )
   })
 
@@ -39,7 +40,7 @@ describe('ListRecipientNotifications', () => {
     const result = await sut.list('')
 
     const expected = {
-      notifications: findRecipientNotificationsRepositorySpy.notifications
+      notifications: findRecipientNotificationsRepositorySpy.notifications,
     }
     expect(result).toStrictEqual(expected)
   })
@@ -47,9 +48,10 @@ describe('ListRecipientNotifications', () => {
   it('should throw if any dependency throws', async () => {
     const suts: ListRecipientNotifications[] = [
       new ListRecipientNotifications({
-        findRecipientNotifications: () => throwError()
-      })
+        findRecipientNotifications: () => throwError(),
+      }),
     ]
+
     for (const sut of suts) {
       const promise = sut.list('')
       await expect(promise).rejects.toThrow()

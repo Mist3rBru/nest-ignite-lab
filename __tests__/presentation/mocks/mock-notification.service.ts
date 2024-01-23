@@ -1,10 +1,10 @@
 import {
-  ICancelNotification,
-  ICountRecipientNotifications,
-  IListRecipientNotifications,
-  IReadNotification,
-  ISendNotification,
-  IUnreadNotification
+  type ICancelNotification,
+  type ICountRecipientNotifications,
+  type IListRecipientNotifications,
+  type IReadNotification,
+  type ISendNotification,
+  type IUnreadNotification,
 } from '@/domain/usecases'
 import { mockNotification } from '@/tests/domain/mocks'
 import { faker } from '@faker-js/faker'
@@ -13,14 +13,15 @@ export class SendNotificationSpy implements ISendNotification {
   calledTimes: number = 0
   params: ISendNotification.Params
   result: ISendNotification.Result = {
-    notification: mockNotification()
+    notification: mockNotification(),
   }
 
   async send(
-    params: ISendNotification.Params
+    params: ISendNotification.Params,
   ): Promise<ISendNotification.Result> {
     this.calledTimes++
     this.params = params
+
     return this.result
   }
 }
@@ -56,33 +57,37 @@ export class UnreadNotificationSpy implements IUnreadNotification {
 }
 
 export class CountRecipientNotificationsSpy
-  implements ICountRecipientNotifications {
+  implements ICountRecipientNotifications
+{
   calledTimes: number = 0
   recipientId: string
   result: ICountRecipientNotifications.Result = {
-    count: faker.datatype.number()
+    count: faker.number.int(),
   }
 
   async count(
-    recipientId: string
+    recipientId: string,
   ): Promise<ICountRecipientNotifications.Result> {
     this.calledTimes++
     this.recipientId = recipientId
+
     return this.result
   }
 }
 
 export class ListRecipientNotificationsSpy
-  implements IListRecipientNotifications {
+  implements IListRecipientNotifications
+{
   calledTimes: number = 0
   recipientId: string
   result: IListRecipientNotifications.Result = {
-    notifications: [mockNotification()]
+    notifications: [mockNotification()],
   }
 
   async list(recipientId: string): Promise<IListRecipientNotifications.Result> {
     this.calledTimes++
     this.recipientId = recipientId
+
     return this.result
   }
 }

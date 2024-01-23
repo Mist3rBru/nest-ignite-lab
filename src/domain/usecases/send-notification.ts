@@ -1,8 +1,8 @@
-import { Notification } from '@/domain/entities'
+import { type Notification } from '@/domain/entities'
 
 export abstract class ISendNotification {
   abstract send(
-    data: ISendNotification.Params
+    data: ISendNotification.Params,
   ): Promise<ISendNotification.Result>
 }
 

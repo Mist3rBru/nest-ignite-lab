@@ -1,9 +1,10 @@
-import { Config } from 'jest'
+import { type Config } from 'jest'
 
 const config: Config = {
   bail: true,
   roots: ['<rootDir>/__tests__'],
   clearMocks: true,
+  maxWorkers: 1,
   collectCoverage: false,
   collectCoverageFrom: ['src/**/*.ts', '!src/**/*config*'],
   coverageDirectory: 'coverage',
@@ -13,16 +14,16 @@ const config: Config = {
       'ts-jest',
       {
         diagnostics: {
-          exclude: ['**']
-        }
-      }
-    ]
+          exclude: ['**'],
+        },
+      },
+    ],
   },
   moduleNameMapper: {
     '@/tests/(.*)': '<rootDir>/__tests__/$1',
-    '@/(.*)': '<rootDir>/src/$1'
+    '@/(.*)': '<rootDir>/src/$1',
   },
-  testPathIgnorePatterns: ['mock*']
+  testPathIgnorePatterns: ['mock*'],
 }
 
 export default config

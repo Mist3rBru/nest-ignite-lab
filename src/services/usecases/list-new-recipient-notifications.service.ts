@@ -1,24 +1,25 @@
-import { IListNewRecipientNotifications } from '@/domain/usecases'
+import { type IListNewRecipientNotifications } from '@/domain/usecases'
 import { IFindRecipientNotificationsRepository } from '@/services/protocols'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class ListNewRecipientNotifications
-  implements IListNewRecipientNotifications {
+  implements IListNewRecipientNotifications
+{
   constructor(
-    private readonly findRecipientNotificationsRepository: IFindRecipientNotificationsRepository
+    private readonly findRecipientNotificationsRepository: IFindRecipientNotificationsRepository,
   ) {}
 
   async list(
-    recipientId: string
+    recipientId: string,
   ): Promise<IListNewRecipientNotifications.Result> {
     const notifications =
       await this.findRecipientNotificationsRepository.findRecipientNotifications(
-        recipientId
+        recipientId,
       )
 
     return {
-      notifications: notifications.filter(n => n.isNew)
+      notifications: notifications.filter(n => n.isNew),
     }
   }
 }

@@ -5,12 +5,13 @@ export class NotificationContent {
 
   constructor(content: string) {
     const length = content.length
+
     if (length < 5 || length > 240) {
       throw new LengthError({
         length,
         min: 5,
         max: 240,
-        param: 'content'
+        param: 'content',
       })
     }
 

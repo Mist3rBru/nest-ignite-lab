@@ -8,7 +8,7 @@ const mockProps = (length: number): LengthError.Props => ({
   param: 'param',
   length,
   min: 1,
-  max: 5
+  max: 5,
 })
 
 describe('LengthError', () => {

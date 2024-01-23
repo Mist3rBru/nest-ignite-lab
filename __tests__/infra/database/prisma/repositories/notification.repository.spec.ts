@@ -68,7 +68,7 @@ describe('PrismaNotificationRepository', () => {
   describe('findRecipientNotifications()', () => {
     it('should find recipient notifications', async () => {
       const sut = await makeSut()
-      const recipientId = faker.datatype.uuid()
+      const recipientId = faker.string.uuid()
 
       await db.notification.create({
         data: new NotificationMapper(

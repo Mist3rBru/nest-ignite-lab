@@ -7,7 +7,7 @@ const makeSut = (value: string): Param => {
 
 describe('Param', () => {
   it('should return param value', () => {
-    const value = faker.random.word()
+    const value = faker.lorem.word()
     const sut = makeSut(value)
 
     expect(sut.value).toBe(value)

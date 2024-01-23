@@ -1,24 +1,25 @@
-import { ICountRecipientNotifications } from '@/domain/usecases'
+import { type ICountRecipientNotifications } from '@/domain/usecases'
 import { IFindRecipientNotificationsRepository } from '@/services/protocols'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class CountRecipientNotifications
-  implements ICountRecipientNotifications {
+  implements ICountRecipientNotifications
+{
   constructor(
-    private readonly findRecipientNotificationsRepository: IFindRecipientNotificationsRepository
+    private readonly findRecipientNotificationsRepository: IFindRecipientNotificationsRepository,
   ) {}
 
   async count(
-    recipientId: string
+    recipientId: string,
   ): Promise<ICountRecipientNotifications.Result> {
     const notifications =
       await this.findRecipientNotificationsRepository.findRecipientNotifications(
-        recipientId
+        recipientId,
       )
 
     return {
-      count: notifications.filter(n => n.isNew).length
+      count: notifications.filter(n => n.isNew).length,
     }
   }
 }

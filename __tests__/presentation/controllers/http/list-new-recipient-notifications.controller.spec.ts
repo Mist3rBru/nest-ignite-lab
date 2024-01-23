@@ -12,24 +12,25 @@ interface Sut {
 const makeSut = (): Sut => {
   const listNewRecipientNotificationsSpy = new ListRecipientNotificationsSpy()
   const sut = new ListNewRecipientNotificationsController(
-    listNewRecipientNotificationsSpy
+    listNewRecipientNotificationsSpy,
   )
+
   return {
     sut,
-    listNewRecipientNotificationsSpy
+    listNewRecipientNotificationsSpy,
   }
 }
 
 describe('ListNewRecipientNotificationsController', () => {
   it('should call ListNewRecipientNotifications', async () => {
     const { sut, listNewRecipientNotificationsSpy } = makeSut()
-    const recipientId = faker.datatype.uuid()
+    const recipientId = faker.string.uuid()
 
     await sut.handle(recipientId)
 
     expect(listNewRecipientNotificationsSpy.calledTimes).toBe(1)
     expect(listNewRecipientNotificationsSpy.recipientId).toStrictEqual(
-      recipientId
+      recipientId,
     )
   })
 
@@ -40,16 +41,17 @@ describe('ListNewRecipientNotificationsController', () => {
 
     const expected = {
       notifications: listNewRecipientNotificationsSpy.result.notifications.map(
-        n => new NotificationMapper(n).toHttp('new')
-      )
+        n => new NotificationMapper(n).toHttp('new'),
+      ),
     }
     expect(result).toStrictEqual(expected)
   })
 
   it('should throw if any dependency throws', async () => {
     const suts: ListNewRecipientNotificationsController[] = [
-      new ListNewRecipientNotificationsController({ list: () => throwError() })
+      new ListNewRecipientNotificationsController({ list: () => throwError() }),
     ]
+
     for (const sut of suts) {
       const promise = sut.handle('')
       await expect(promise).rejects.toThrow()

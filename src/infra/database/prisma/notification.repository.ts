@@ -1,10 +1,10 @@
 import { Notification } from '@/domain/entities'
 import { NotificationMapper } from '@/domain/mappers/notification-mapper'
 import {
-  ICreateNotificationRepository,
-  IFindNotificationByIdRepository,
-  IFindRecipientNotificationsRepository,
-  IUpdateNotificationRepository
+  type ICreateNotificationRepository,
+  type IFindNotificationByIdRepository,
+  type IFindRecipientNotificationsRepository,
+  type IUpdateNotificationRepository
 } from '@/services/protocols'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from './prisma.service'
@@ -32,6 +32,7 @@ export class PrismaNotificationsRepository implements INotificationRepository {
         id: notificationId
       }
     })
+
     return data ? new Notification(data) : null
   }
 
@@ -43,6 +44,7 @@ export class PrismaNotificationsRepository implements INotificationRepository {
         recipientId
       }
     })
+
     return data.map(d => new Notification(d))
   }
 

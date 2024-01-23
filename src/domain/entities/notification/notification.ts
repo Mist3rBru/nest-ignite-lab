@@ -12,11 +12,11 @@ export class Notification {
       recipientId: props.recipientId,
       readAt: props.readAt ?? null,
       canceledAt: props.canceledAt ?? null,
-      createdAt: props.createdAt ?? new Date()
+      createdAt: props.createdAt ?? new Date(),
     }
   }
 
-  public get id() {
+  public get id(): string {
     return this.props.id
   }
 

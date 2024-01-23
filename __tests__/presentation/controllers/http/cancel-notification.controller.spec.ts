@@ -11,13 +11,14 @@ interface Sut {
 const makeSut = (): Sut => {
   const cancelNotificationSpy = new CancelNotificationSpy()
   const sut = new CancelNotificationController(cancelNotificationSpy)
+
   return {
     sut,
-    cancelNotificationSpy
+    cancelNotificationSpy,
   }
 }
 
-const mockRequest = (): string => faker.datatype.uuid()
+const mockRequest = (): string => faker.string.uuid()
 
 describe('CancelNotificationController', () => {
   it('should call CancelNotification', async () => {
@@ -32,8 +33,9 @@ describe('CancelNotificationController', () => {
 
   it('should throw if any dependency throws', async () => {
     const suts: CancelNotificationController[] = [
-      new CancelNotificationController({ cancel: () => throwError() })
+      new CancelNotificationController({ cancel: () => throwError() }),
     ]
+
     for (const sut of suts) {
       const request = mockRequest()
       const promise = sut.handle(request)

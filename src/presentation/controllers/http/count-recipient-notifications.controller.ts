@@ -1,11 +1,11 @@
 import { ICountRecipientNotifications } from '@/domain/usecases'
-import { IController } from '@/presentation/protocols'
+import { type IController } from '@/presentation/protocols'
 import { Controller, Get, Param } from '@nestjs/common'
 
 @Controller()
 export class CountRecipientNotificationsController implements IController {
   constructor(
-    private readonly countRecipientNotifications: ICountRecipientNotifications
+    private readonly countRecipientNotifications: ICountRecipientNotifications,
   ) {}
 
   @Get('notifications/:recipientId/count')
@@ -13,7 +13,7 @@ export class CountRecipientNotificationsController implements IController {
     const result = await this.countRecipientNotifications.count(recipientId)
 
     return {
-      count: result.count
+      count: result.count,
     }
   }
 }

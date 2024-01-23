@@ -1,8 +1,8 @@
-import { Notification } from '@/domain/entities'
+import { type Notification } from '@/domain/entities'
 
 export abstract class IListNewRecipientNotifications {
   abstract list(
-    recipientId: string
+    recipientId: string,
   ): Promise<IListNewRecipientNotifications.Result>
 }
 
